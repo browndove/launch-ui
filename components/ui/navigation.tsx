@@ -48,76 +48,80 @@ interface NavigationProps {
 export default function Navigation({
   menuItems = [
     {
-      title: "Getting started",
+      title: "Product",
       content: "default",
     },
     {
-      title: "Components",
+      title: "Capabilities",
       content: "components",
     },
     {
-      title: "Documentation",
+      title: "Get started",
       isLink: true,
-      href: siteConfig.url,
+      href: siteConfig.getStartedUrl,
     },
   ],
   components = [
     {
-      title: "Alert Dialog",
-      href: "/docs/primitives/alert-dialog",
+      title: "Secure messaging",
+      href: "/#capabilities",
       description:
-        "A modal dialog that interrupts the user with important content and expects a response.",
+        "Encrypted, traceable threads built for clinical workflows—not consumer chat.",
     },
     {
-      title: "Hover Card",
-      href: "/docs/primitives/hover-card",
+      title: "Real-time alerts",
+      href: "/#capabilities",
       description:
-        "For sighted users to preview content available behind a link.",
+        "Route critical updates to the right roles the moment they matter.",
     },
     {
-      title: "Progress",
-      href: "/docs/primitives/progress",
+      title: "Instant escalations",
+      href: "/#capabilities",
       description:
-        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+        "Escalate with clear ownership when seconds count.",
     },
     {
-      title: "Scroll-area",
-      href: "/docs/primitives/scroll-area",
-      description: "Visually or semantically separates content.",
+      title: "Privacy by design",
+      href: "/#capabilities",
+      description:
+        "Controls and audit expectations aligned with how healthcare handles PHI.",
     },
     {
-      title: "Tabs",
-      href: "/docs/primitives/tabs",
+      title: "Works everywhere",
+      href: "/#capabilities",
       description:
-        "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+        "Responsive across floors, desktops, and on-call devices.",
     },
     {
-      title: "Tooltip",
-      href: "/docs/primitives/tooltip",
+      title: "Stack integrations",
+      href: "/#capabilities",
       description:
-        "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+        "Connect EHR events, paging, and identity without another silo.",
     },
   ],
   logo = <LaunchUI />,
-  logoTitle = "Launch UI",
-  logoDescription = "Landing page template built with React, Shadcn/ui and Tailwind that you can copy/paste into your project.",
+  logoTitle = "Helix",
+  logoDescription =
+    "Clinical communication for speed and accountability—secure messaging, real-time alerts, and escalations when every second counts.",
   logoHref = siteConfig.url,
   introItems = [
     {
-      title: "Introduction",
-      href: siteConfig.url,
+      title: "Helix app",
+      href: siteConfig.apps.helix,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Clinical messaging and alerts for frontline teams—aligned across roles, users, and facilities.",
     },
     {
-      title: "Installation",
-      href: siteConfig.url,
-      description: "How to install dependencies and structure your app.",
+      title: "Admin Panel",
+      href: siteConfig.apps.admin,
+      description:
+        "Govern users, roles, routing, and hospital operations from a single control surface.",
     },
     {
-      title: "Typography",
-      href: siteConfig.url,
-      description: "Styles for headings, paragraphs, lists...etc",
+      title: "Analytics dashboard",
+      href: siteConfig.apps.analytics,
+      description:
+        "Operational visibility into alerts, escalations, and adoption across sites and service lines.",
     },
   ],
 }: NavigationProps) {
@@ -190,13 +194,19 @@ function ListItem({
   className,
   title,
   children,
+  href,
   ...props
 }: React.ComponentProps<"a"> & { title: string }) {
+  const isExternal =
+    typeof href === "string" && /^https?:\/\//i.test(href);
   return (
     <li>
       <NavigationMenuLink asChild>
         <a
           data-slot="list-item"
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
           className={cn(
             "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none",
             className,

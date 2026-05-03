@@ -1,4 +1,4 @@
-import { User, Users } from "lucide-react";
+import { Building2, Hospital, Users } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -6,76 +6,99 @@ import { cn } from "@/lib/utils";
 import { PricingColumn, PricingColumnProps } from "../../ui/pricing-column";
 import { Section } from "../../ui/section";
 
-interface PricingProps {
+interface EngagementPathsProps {
   title?: string | false;
   description?: string | false;
   plans?: PricingColumnProps[] | false;
   className?: string;
+  id?: string;
 }
 
-export default function Pricing({
-  title = "Build your dream landing page, today.",
-  description = "Get lifetime access to all the components. No recurring fees. Just simple, transparent pricing.",
+/** Deployment paths for Helix (reuses card layout; not a public price list). */
+function EngagementPaths({
+  title = "Choose how you deploy Helix",
+  description =
+    "Three engagement paths—each with clear deliverables and support. No public price list; we scope every deployment with your clinical and IT stakeholders.",
   plans = [
     {
-      name: "Free",
-      description: "For everyone starting out on a website for their big idea",
-      price: 0,
-      priceNote: "Free and open-source forever. Get started now.",
+      name: "Pilot",
+      icon: <Hospital className="size-5" />,
+      description:
+        "Prove speed and alignment in one unit, campus, or service line before you expand.",
+      priceHeadline: "90-day pilot",
+      priceHeadlineDetail: "Scoped rollout · outcomes-first",
+      priceNote:
+        "Typical 90-day engagement. Scope depends on seats, channels, and integrations—we quote after discovery.",
       cta: {
         variant: "glow",
-        label: "Get started for free",
-        href: "/docs/getting-started/introduction",
+        label: "Start a pilot",
+        href: siteConfig.getStartedUrl,
       },
       features: [
-        "1 website template",
-        "9 blocks and sections",
-        "4 custom animations",
+        "Core secure messaging, alerts, and escalations",
+        "Champion training and hands-on rollout support",
+        "Defined success metrics and weekly checkpoints",
+        "Path to expand scope when outcomes land",
       ],
       variant: "default",
-      className: "hidden lg:flex",
     },
     {
-      name: "Pro",
-      icon: <User className="size-4" />,
-      description: "For early-stage founders, solopreneurs and indie devs",
-      price: 99,
-      priceNote: "Lifetime access. Free updates. No recurring fees.",
+      name: "Organization",
+      icon: <Building2 className="size-5" />,
+      description:
+        "Standardize Helix across hospitals and clinics with shared governance and coordination.",
+      priceHeadline: "Multi-site rollout",
+      priceHeadlineDetail: "Governance · adoption · SLAs",
+      priceNote:
+        "Annual agreements with onboarding, adoption plays, and named customer success.",
       cta: {
         variant: "default",
-        label: "Get all-access",
-        href: siteConfig.pricing.pro,
+        label: "Talk to sales",
+        href: siteConfig.links.email,
       },
       features: [
-        `${siteConfig.stats.templates} templates`,
-        `${siteConfig.stats.sections} blocks and sections`,
-        `${siteConfig.stats.illustrations} illustrations`,
-        `${siteConfig.stats.animations} custom animations`,
+        "Cross-site routing, directories, and escalation policies",
+        "Role-based access with audit-friendly exports",
+        "Executive rollout reviews and change leadership assets",
+        "SLA-backed support for production workloads",
       ],
       variant: "glow-brand",
     },
     {
-      name: "Pro Team",
-      icon: <Users className="size-4" />,
-      description: "For teams and agencies working on cool products together",
-      price: 499,
-      priceNote: "Lifetime access. Free updates. No recurring fees.",
+      name: "Enterprise",
+      icon: <Users className="size-5" />,
+      description:
+        "Large health systems needing custom integrations, identity at scale, and joint steering.",
+      priceHeadline: "Tailored program",
+      priceHeadlineDetail: "Integrations · identity · procurement",
+      priceNote:
+        "Volume economics, integration workshops, and alignment with security & compliance.",
       cta: {
         variant: "default",
-        label: "Get all-access for your team",
-        href: siteConfig.pricing.team,
+        label: "Contact enterprise",
+        href: `${siteConfig.links.email}?subject=Helix%20Enterprise%20inquiry`,
       },
       features: [
-        "All the templates, components and sections available for your entire team",
+        "Enterprise SSO / SCIM patterns and advanced IAM",
+        "Deep EHR, paging, and operations integrations",
+        "Dedicated solutions and technical architects",
+        "Procurement, BAA, and governance support",
       ],
       variant: "glow",
     },
   ],
   className = "",
-}: PricingProps) {
+  id = "deployment",
+}: EngagementPathsProps) {
   return (
-    <Section className={cn(className)}>
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-12">
+    <Section
+      id={id}
+      className={cn(
+        "border-border/40 bg-muted/20 border-y",
+        className,
+      )}
+    >
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 md:gap-16">
         {(title || description) && (
           <div className="flex flex-col items-center gap-4 px-4 text-center sm:gap-8">
             {title && (
@@ -99,6 +122,8 @@ export default function Pricing({
                 icon={plan.icon}
                 description={plan.description}
                 price={plan.price}
+                priceHeadline={plan.priceHeadline}
+                priceHeadlineDetail={plan.priceHeadlineDetail}
                 originalPrice={plan.originalPrice}
                 promotionText={plan.promotionText}
                 priceNote={plan.priceNote}
@@ -114,3 +139,5 @@ export default function Pricing({
     </Section>
   );
 }
+
+export default EngagementPaths;

@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 import { Section } from "../../ui/section";
 
@@ -12,37 +13,41 @@ interface StatItemProps {
 interface StatsProps {
   items?: StatItemProps[] | false;
   className?: string;
+  id?: string;
 }
 
 export default function Stats({
   items = [
     {
-      label: "used by",
-      value: Math.round(siteConfig.stats.figma / 100) / 10,
-      suffix: "k",
-      description: "designers on Figma Community",
+      label: "trusted by",
+      value: siteConfig.stats.careSites,
+      suffix: "+",
+      description: "hospitals and clinics nationwide",
     },
     {
       label: "over",
-      value: siteConfig.stats.github,
-      description: "clones and forks of the template on Github",
+      value: siteConfig.stats.alertsMonthlyMillions,
+      suffix: "M+",
+      description: "secure alerts & escalations routed monthly",
     },
     {
-      label: "already",
-      value: Math.round(siteConfig.stats.cli / 100) / 10,
-      suffix: "k",
-      description: "installations with shadcn/ui CLI",
+      label: "median",
+      value: siteConfig.stats.medianEscalationSeconds,
+      suffix: "s",
+      description: "to escalate time-sensitive events",
     },
     {
-      label: "includes",
-      value: siteConfig.stats.sections,
-      description: "blocks and sections",
+      label: "up to",
+      value: siteConfig.stats.uptimePercent,
+      suffix: "%",
+      description: "uptime on core messaging infrastructure",
     },
   ],
   className,
+  id = "analytics",
 }: StatsProps) {
   return (
-    <Section className={className}>
+    <Section id={id} className={cn("scroll-mt-24", className)}>
       <div className="container mx-auto max-w-[960px]">
         {items !== false && items.length > 0 && (
           <div className="grid grid-cols-2 gap-12 sm:grid-cols-4">

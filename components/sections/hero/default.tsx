@@ -1,17 +1,16 @@
 import { type VariantProps } from "class-variance-authority";
 import { ArrowRightIcon } from "lucide-react";
+import { MdBiotech } from "react-icons/md";
 import { ReactNode } from "react";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-import Github from "../../logos/github";
 import { Badge } from "../../ui/badge";
 import { Button, buttonVariants } from "../../ui/button";
 import Glow from "../../ui/glow";
-import { Mockup, MockupFrame } from "../../ui/mockup";
-import Screenshot from "../../ui/screenshot";
 import { Section } from "../../ui/section";
+import TilesIllustration from "../../ui/tiles-illustration";
 
 interface HeroButtonProps {
   href: string;
@@ -31,22 +30,13 @@ interface HeroProps {
 }
 
 export default function Hero({
-  title = "Give your big idea the design it deserves",
-  description = "Professionally designed blocks and templates built with React, Shadcn/ui and Tailwind that will help your product stand out.",
-  mockup = (
-    <Screenshot
-      srcLight="/dashboard-light.png"
-      srcDark="/dashboard-dark.png"
-      alt="Launch UI app screenshot"
-      width={1248}
-      height={765}
-      className="w-full"
-    />
-  ),
+  title = "Built for the moments medicine cannot afford to miss",
+  description = "Secure messaging, real-time alerts, and instant escalations built for the speed healthcare demands.",
+  mockup = <TilesIllustration />,
   badge = (
     <Badge variant="outline" className="animate-appear">
       <span className="text-muted-foreground">
-        New version of Launch UI is out!
+        Helix is now live!
       </span>
       <a href={siteConfig.getStartedUrl} className="flex items-center gap-1">
         Get started
@@ -62,9 +52,9 @@ export default function Hero({
     },
     {
       href: siteConfig.links.github,
-      text: "Github",
+      text: "Request Demo",
       variant: "glow",
-      icon: <Github className="mr-2 size-4" />,
+      icon: <MdBiotech className="mr-2 size-4 text-blue-600" />,
     },
   ],
   className,
@@ -72,11 +62,19 @@ export default function Hero({
   return (
     <Section
       className={cn(
-        "fade-bottom overflow-hidden pb-0 sm:pb-0 md:pb-0",
+        "fade-bottom relative overflow-hidden bg-[#FAF9F7] pt-6 pb-0 sm:pt-10 sm:pb-0 md:pt-14 md:pb-0",
         className,
       )}
     >
-      <div className="max-w-container mx-auto flex flex-col gap-12 pt-16 sm:gap-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[-430px] left-1/2 z-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full border border-blue-300/40"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[-410px] left-1/2 z-0 h-[860px] w-[860px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(147,197,253,0.38)_0%,rgba(147,197,253,0.22)_35%,rgba(147,197,253,0.08)_55%,rgba(147,197,253,0)_75%)] blur-2xl"
+      />
+      <div className="max-w-container mx-auto flex flex-col gap-12 pt-8 sm:gap-24 sm:pt-10 md:pt-12">
         <div className="flex flex-col items-center gap-6 text-center sm:gap-12">
           {badge !== false && badge}
           <h1 className="animate-appear from-foreground to-foreground dark:to-muted-foreground relative z-10 inline-block bg-linear-to-r bg-clip-text text-4xl leading-tight font-semibold text-balance text-transparent drop-shadow-2xl sm:text-6xl sm:leading-tight md:text-8xl md:leading-tight">
@@ -104,18 +102,8 @@ export default function Hero({
             </div>
           )}
           {mockup !== false && (
-            <div className="relative w-full pt-12">
-              <MockupFrame
-                className="animate-appear opacity-0 delay-700"
-                size="small"
-              >
-                <Mockup
-                  type="responsive"
-                  className="bg-background/90 w-full rounded-xl border-0"
-                >
-                  {mockup}
-                </Mockup>
-              </MockupFrame>
+            <div className="animate-appear relative w-full pt-12 opacity-0 delay-700">
+              {mockup}
               <Glow
                 variant="top"
                 className="animate-appear-zoom opacity-0 delay-1000"

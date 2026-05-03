@@ -21,6 +21,7 @@ interface FAQProps {
   title?: string;
   items?: FAQItemProps[] | false;
   className?: string;
+  id?: string;
 }
 
 export default function FAQ({
@@ -28,116 +29,109 @@ export default function FAQ({
   items = [
     {
       question:
-        "Why building a great landing page is critical for your business?",
+        "Why not just use pagers, SMS, or consumer chat apps for critical updates?",
       answer: (
         <>
           <p className="text-muted-foreground mb-4 max-w-[640px] text-balance">
-            In today&apos;s AI-driven world, standing out is harder than ever.
-            While anyone can build a product, a professional landing page makes
-            the difference between success and failure.
+            Those channels break down when accountability, routing, and context
+            matter. Messages get lost in threads, there&apos;s no clean escalation
+            path, and consumer tools weren&apos;t built for PHI or clinical
+            workflows.
           </p>
           <p className="text-muted-foreground mb-4 max-w-[640px] text-balance">
-            Launch UI helps you ship faster without compromising on quality.
+            Helix is built for secure, traceable communication—so the right people
+            see the right signal at the right time, without hunting through noise.
           </p>
         </>
       ),
     },
     {
-      question: "Why use Launch UI instead of a no-code tool?",
+      question: "How does Helix handle escalations when seconds matter?",
       answer: (
         <>
           <p className="text-muted-foreground mb-4 max-w-[600px]">
-            No-code tools lock you into their ecosystem with recurring fees and
-            limited control. They often come with performance issues and make it
-            difficult to integrate with your product.
+            Alerts can be routed by role, team, and severity, with one-tap
+            escalation instead of copy-pasting updates into new chats or calls.
           </p>
           <p className="text-muted-foreground mb-4 max-w-[600px]">
-            You can&apos;t even change your hosting provider and basic things
-            like web analytics come as extra costs and paid add-ons.
-          </p>
-          <p className="text-muted-foreground mb-4 max-w-[600px]">
-            What might seem like a convenient solution today could paint you
-            into a corner tomorrow, limiting your ability to scale and adapt.
-            Launch UI gives you full control of your code while maintaining
-            professional quality.
+            The goal is fewer handoffs, faster acknowledgment, and a clear trail
+            of who was notified and when—so critical moments don&apos;t depend on
+            whoever happened to be looking at their phone.
           </p>
         </>
       ),
     },
     {
       question:
-        "How Launch UI is different from other components libraries and templates?",
+        "How is Helix designed around privacy, security, and audit expectations?",
       answer: (
         <>
           <p className="text-muted-foreground mb-4 max-w-[580px]">
-            Launch UI stands out with premium design quality and delightful
-            touches of custom animations and illustrations.
-          </p>
-          <p className="text-muted-foreground mb-4 max-w-[580px]">
-            All components are carefully crafted to help position your product
-            as a professional tool, avoiding the generic template look.
+            Helix is architected with healthcare-grade expectations in mind:
+            encryption in transit, tight access controls, and workflows that
+            support auditability—not &quot;best effort&quot; consumer privacy.
           </p>
           <p className="text-muted-foreground mb-4 max-w-[640px] text-balance">
-            Unlike many libraries that rely on outdated CSS practices and old
-            dependencies, Launch UI is built with modern technologies and best
-            practices in mind.
+            Every organization has its own compliance review process; we work with
+            your security and legal teams on questionnaires, BAAs where
+            applicable, and evidence your auditors actually ask for.
           </p>
         </>
       ),
     },
     {
-      question: 'Why exactly does it mean that "The code is yours"?',
+      question: "Can Helix connect to our EHR, paging, and hospital systems?",
       answer: (
         <>
           <p className="text-muted-foreground mb-4 max-w-[580px]">
-            The basic version of Launch UI is open-source and free forever,
-            under a do-whatever-you-want license.
+            Yes—that&apos;s the point. Helix is meant to sit alongside what you
+            already run: EHR events, on-call schedules, identity systems, and
+            existing notification paths.
           </p>
           <p className="text-muted-foreground mb-4 max-w-[580px]">
-            The pro version that contains more components and options is a
-            one-time purchase that gives you lifetime access to all current and
-            future content. Use it for unlimited personal and commercial
-            projects - no recurring fees or restrictions.
-          </p>
-          <p className="text-muted-foreground mb-4 max-w-[580px]">
-            For complete details about licensing and usage rights, check out{" "}
-            <Link href="/pricing" className="text-foreground underline">
-              the pricing page
-            </Link>
-            .
+            Integrations are scoped to your environment so alerts and context flow
+            in without turning Helix into another siloed inbox.
           </p>
         </>
       ),
     },
     {
-      question: "Are Figma files included?",
+      question: "What does rollout look like for a unit or health system?",
       answer: (
         <p className="text-muted-foreground mb-4 max-w-[580px]">
-          Yes! The complete Launch UI template is available for free on the{" "}
-          <Link
-            href="https://www.figma.com/community/file/1420131743903900629/launch-ui-landing-page-components-ui-kit"
-            className="text-foreground underline"
-          >
-            Figma community
-          </Link>
-          .
+          Most teams start with a focused pilot—one service line or
+          campus—define escalation rules and roles, then expand once workflows
+          feel reliable. We help with training materials, success metrics, and a
+          phased plan so adoption doesn&apos;t depend on a big-bang go-live.
         </p>
       ),
     },
     {
-      question: "Can I get a discount?",
+      question: "How do we explore Helix for our organization?",
       answer: (
         <>
           <p className="text-muted-foreground mb-4 max-w-[580px]">
-            Actually, yes! I&apos;m always acively looking for beta testers of
-            new features. If you are interested in exchanging feedback for a
-            discount, please contact me via{" "}
+            Start with a conversation about your environments, integrations, and
+            outcomes—then we&apos;ll align on a demo or pilot that fits how your
+            teams actually work.
+          </p>
+          <p className="text-muted-foreground mb-4 max-w-[580px]">
+            Reach out anytime at{" "}
             <a
               href={siteConfig.links.email}
-              className="underline underline-offset-2"
+              className="text-foreground underline underline-offset-2"
             >
-              email
-            </a>
+              {siteConfig.links.email.replace("mailto:", "")}
+            </a>{" "}
+            or via{" "}
+            <Link href={siteConfig.getStartedUrl} className="text-foreground underline">
+              Get started
+            </Link>
+            {" "}
+            on{" "}
+            <Link href={siteConfig.url} className="text-foreground underline">
+              our site
+            </Link>
             .
           </p>
         </>
@@ -145,9 +139,10 @@ export default function FAQ({
     },
   ],
   className,
+  id = "faq",
 }: FAQProps) {
   return (
-    <Section className={className}>
+    <Section id={id} className={className}>
       <div className="max-w-container mx-auto flex flex-col items-center gap-8">
         <h2 className="text-center text-3xl font-semibold sm:text-5xl">
           {title}

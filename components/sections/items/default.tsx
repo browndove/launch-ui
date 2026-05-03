@@ -1,16 +1,16 @@
 import {
-  BlocksIcon,
-  EclipseIcon,
-  FastForwardIcon,
-  LanguagesIcon,
+  ActivityIcon,
+  BellRingIcon,
+  LockKeyholeIcon,
   MonitorSmartphoneIcon,
-  RocketIcon,
-  ScanFaceIcon,
-  SquarePenIcon,
+  PlugIcon,
+  ShieldCheckIcon,
+  UsersIcon,
+  ZapIcon,
 } from "lucide-react";
 import { ReactNode } from "react";
 
-import { Item, ItemDescription,ItemIcon, ItemTitle } from "../../ui/item";
+import { Item, ItemDescription, ItemIcon, ItemTitle } from "../../ui/item";
 import { Section } from "../../ui/section";
 
 interface ItemProps {
@@ -23,59 +23,66 @@ interface ItemsProps {
   title?: string;
   items?: ItemProps[] | false;
   className?: string;
+  id?: string;
 }
 
 export default function Items({
-  title = "Everything you need. Nothing you don't.",
+  title = "Built for care teams. Designed for critical moments.",
   items = [
     {
-      title: "Accessibility first",
-      description: "Fully WCAG 2.0 compliant, made with best a11y practices",
-      icon: <ScanFaceIcon className="size-5 stroke-1" />,
+      title: "Secure messaging",
+      description:
+        "Encrypted, traceable communication built for clinical workflows—not consumer chat.",
+      icon: <LockKeyholeIcon className="size-5 stroke-1" />,
     },
     {
-      title: "Responsive design",
-      description: "Looks and works great on any device and screen size",
+      title: "Real-time alerts",
+      description:
+        "Push critical updates to the right people the moment they matter.",
+      icon: <BellRingIcon className="size-5 stroke-1" />,
+    },
+    {
+      title: "Instant escalations",
+      description:
+        "Escalate with one tap when seconds count—no hunting through threads.",
+      icon: <ZapIcon className="size-5 stroke-1" />,
+    },
+    {
+      title: "Privacy by design",
+      description:
+        "Architecture and practices aligned with how healthcare actually handles PHI.",
+      icon: <ShieldCheckIcon className="size-5 stroke-1" />,
+    },
+    {
+      title: "Works where you are",
+      description:
+        "Responsive on phones, tablets, and desktops—from rounds to the desk.",
       icon: <MonitorSmartphoneIcon className="size-5 stroke-1" />,
     },
     {
-      title: "Light and dark mode",
+      title: "Ops at a glance",
       description:
-        "Seamless switching between color schemes, 6 themes included",
-      icon: <EclipseIcon className="size-5 stroke-1" />,
+        "See patient-relevant signal without drowning in noise or clutter.",
+      icon: <ActivityIcon className="size-5 stroke-1" />,
     },
     {
-      title: "Easy to customize",
-      description: "Flexible options to match your product or brand",
-      icon: <BlocksIcon className="size-5 stroke-1" />,
-    },
-    {
-      title: "Top-level performance",
-      description: "Made for lightning-fast load times and smooth interactions",
-      icon: <FastForwardIcon className="size-5 stroke-1" />,
-    },
-    {
-      title: "Production ready",
-      description: "Thoroughly tested and launch-prepared",
-      icon: <RocketIcon className="size-5 stroke-1" />,
-    },
-    {
-      title: "Made for localisation",
+      title: "Team coordination",
       description:
-        "Easy to implement support for multiple languages and regions",
-      icon: <LanguagesIcon className="size-5 stroke-1" />,
+        "Keep nurses, physicians, and support aligned on the same thread.",
+      icon: <UsersIcon className="size-5 stroke-1" />,
     },
     {
-      title: "CMS friendly",
+      title: "Plugs into your stack",
       description:
-        "Built to work with your any headless content management system",
-      icon: <SquarePenIcon className="size-5 stroke-1" />,
+        "Connect to EHRs, paging, and hospital systems instead of another silo.",
+      icon: <PlugIcon className="size-5 stroke-1" />,
     },
   ],
   className,
+  id = "capabilities",
 }: ItemsProps) {
   return (
-    <Section className={className}>
+    <Section id={id} className={className}>
       <div className="max-w-container mx-auto flex flex-col items-center gap-6 sm:gap-20">
         <h2 className="max-w-[560px] text-center text-3xl leading-tight font-semibold sm:text-5xl sm:leading-tight">
           {title}

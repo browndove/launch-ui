@@ -1,61 +1,102 @@
+import {
+  HeartPulseIcon,
+  LockKeyholeIcon,
+  ShieldCheckIcon,
+  ServerIcon,
+  ClockIcon,
+} from "lucide-react";
 import { ReactNode } from "react";
 
-import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 
-import Figma from "../../logos/figma";
-import React from "../../logos/react";
-import ShadcnUi from "../../logos/shadcn-ui";
-import Tailwind from "../../logos/tailwind";
-import TypeScript from "../../logos/typescript";
 import { Badge } from "../../ui/badge";
-import Logo from "../../ui/logo";
 import { Section } from "../../ui/section";
 
 interface LogosProps {
   title?: string;
   badge?: ReactNode | false;
-  logos?: ReactNode[] | false;
   className?: string;
 }
 
+interface TrustItem {
+  icon: ReactNode;
+  label: string;
+  detail?: string;
+}
+
+const TRUST_ITEMS: TrustItem[] = [
+  {
+    icon: <ShieldCheckIcon className="size-5 stroke-[1.5]" />,
+    label: "HIPAA",
+    detail: "Compliant",
+  },
+  {
+    icon: <LockKeyholeIcon className="size-5 stroke-[1.5]" />,
+    label: "End-to-end",
+    detail: "Encrypted",
+  },
+  {
+    icon: <ServerIcon className="size-5 stroke-[1.5]" />,
+    label: "Uptime",
+    detail: "99.99%",
+  },
+  {
+    icon: <HeartPulseIcon className="size-5 stroke-[1.5]" />,
+    label: "Healthcare",
+    detail: "Grade",
+  },
+  {
+    icon: <ClockIcon className="size-5 stroke-[1.5]" />,
+    label: "24/7",
+    detail: "Support",
+  },
+];
+
 export default function Logos({
-  title = "Built with industry-standard tools and best practices",
+  title = "Trusted by hospitals for secure, real-time communication",
   badge = (
     <Badge variant="outline" className="border-brand/30 text-brand">
-      Last updated: {siteConfig.stats.updated}
+      Enterprise ready
     </Badge>
   ),
-  logos = [
-    <Logo key="figma" image={Figma} name="Figma" />,
-    <Logo key="react" image={React} name="React" version="19.2.4" />,
-    <Logo
-      key="typescript"
-      image={TypeScript}
-      name="TypeScript"
-      version="5.9.3"
-    />,
-    <Logo
-      key="shadcn"
-      image={ShadcnUi}
-      name="Shadcn/ui"
-      version="4.0.5"
-    />,
-    <Logo key="tailwind" image={Tailwind} name="Tailwind" version="4.2.1" />,
-  ],
   className,
 }: LogosProps) {
   return (
-    <Section className={className}>
-      <div className="max-w-container mx-auto flex flex-col items-center gap-8 text-center">
-        <div className="flex flex-col items-center gap-6">
+    <Section
+      className={cn(
+        "border-border/30 border-b bg-[#FAF9F7] py-10 sm:py-14",
+        className,
+      )}
+    >
+      <div className="max-w-container mx-auto flex flex-col items-center gap-8 text-center sm:gap-10">
+        <div className="flex max-w-2xl flex-col items-center gap-4">
           {badge !== false && badge}
-          <h2 className="text-md font-semibold sm:text-2xl">{title}</h2>
+          <h2 className="text-foreground text-balance text-xl font-semibold tracking-tight sm:text-2xl sm:leading-snug md:text-3xl">
+            {title}
+          </h2>
         </div>
-        {logos !== false && logos.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {logos}
-          </div>
-        )}
+        <div className="grid w-full max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-5">
+          {TRUST_ITEMS.map((item) => (
+            <div
+              key={item.label}
+              className="border-border/60 bg-background/90 flex items-start gap-3 rounded-2xl border px-4 py-4 text-left shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="bg-brand/10 text-brand flex size-10 shrink-0 items-center justify-center rounded-xl">
+                {item.icon}
+              </div>
+              <div className="min-w-0 flex-1 pt-0.5">
+                <p className="text-foreground text-sm font-semibold leading-tight">
+                  {item.label}
+                </p>
+                {item.detail && (
+                  <p className="text-muted-foreground mt-0.5 text-xs font-medium">
+                    {item.detail}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </Section>
   );

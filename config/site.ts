@@ -1,30 +1,42 @@
 export const siteConfig = {
-  name: "Launch UI",
-  url: "https://launchuicomponents.com",
-  getStartedUrl:
-    "https://launchuicomponents.com/docs/getting-started/introduction",
-  ogImage: "https://launchuicomponents.com/og.jpg",
+  name: "Helix",
+  url: "https://helixhealth.com",
+  getStartedUrl: "https://helixhealth.com/get-started",
+  ogImage: "https://helixhealth.com/og.jpg",
   description:
     "Landing page components built with React, Shadcn/ui and Tailwind that will make your website feel premium.",
+  apps: {
+    /** In-product Helix experience on this marketing site */
+    helix: "/#helix-app",
+    admin: "https://admin.helixhealth.app/",
+    analytics: "https://analytics.helixhealth.app/login?from=%2F",
+  },
   links: {
-    twitter: "https://twitter.com/mikolajdobrucki",
-    github: "https://github.com/launch-ui/launch-ui",
-    email: "mailto:contact@mikolajdobrucki.com",
+    twitter: "https://twitter.com/helixhealth",
+    github: "https://github.com/helix-health",
+    email: "mailto:hello@helixhealth.com",
+    appStore: "https://apps.apple.com/app/helix/id000000000",
+    playStore:
+      "https://play.google.com/store/apps/details?id=com.helixhealth.app",
+    social: {
+      x: "https://twitter.com/helixhealth",
+      linkedin: "https://www.linkedin.com/company/helixhealth",
+      facebook: "https://www.facebook.com/helixhealth",
+      instagram: "https://www.instagram.com/helixhealth",
+    },
   },
   pricing: {
-    pro: "https://launchui.lemonsqueezy.com/buy/b4798c68-c858-4c34-860b-069b5a0d6c4e",
-    team: "https://launchui.lemonsqueezy.com/buy/130d8cfe-e123-464b-9f67-c74c5fedfb45",
+    pro: "https://helixhealth.com/pricing",
+    team: "https://helixhealth.com/pricing",
   },
   stats: {
-    figma: 8839,
-    github: 1829,
-    cli: 18462,
-    total: "29.1k+",
-    updated: "13 Mar 2026",
-    sections: 74,
-    illustrations: 23,
-    animations: 15,
-    templates: 7,
+    /** Shown in logos strip badge */
+    updated: "May 2026",
+    /** Social-proof metrics for the stats grid */
+    careSites: 120,
+    alertsMonthlyMillions: 4.2,
+    medianEscalationSeconds: 45,
+    uptimePercent: 99.99,
   },
 };
 

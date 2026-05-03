@@ -1,9 +1,12 @@
+"use client";
+
 import { type VariantProps } from "class-variance-authority";
 import { Menu } from "lucide-react";
+import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 
 import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
+import { cn, externalLinkProps } from "@/lib/utils";
 
 import LaunchUI from "../../logos/launch-ui";
 import { Button, buttonVariants } from "../../ui/button";
@@ -12,8 +15,11 @@ import {
   NavbarLeft,
   NavbarRight,
 } from "../../ui/navbar";
-import Navigation from "../../ui/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
+
+const Navigation = dynamic(() => import("../../ui/navigation"), {
+  ssr: false,
+});
 
 interface NavbarLink {
   text: string;
@@ -42,18 +48,22 @@ interface NavbarProps {
 
 export default function Navbar({
   logo = <LaunchUI />,
-  name = "Launch UI",
-  homeUrl = siteConfig.url,
+  name = "Helix",
+  homeUrl = "/",
   mobileLinks = [
-    { text: "Getting Started", href: siteConfig.url },
-    { text: "Components", href: siteConfig.url },
-    { text: "Documentation", href: siteConfig.url },
+    { text: "Helix app", href: siteConfig.apps.helix },
+    { text: "Admin Panel", href: siteConfig.apps.admin },
+    { text: "Analytics dashboard", href: siteConfig.apps.analytics },
   ],
   actions = [
-    { text: "Sign in", href: siteConfig.url, isButton: false },
     {
-      text: "Get Started",
-      href: siteConfig.url,
+      text: "Contact",
+      href: siteConfig.links.email,
+      isButton: false,
+    },
+    {
+      text: "Get started",
+      href: siteConfig.getStartedUrl,
       isButton: true,
       variant: "default",
     },
@@ -125,6 +135,7 @@ export default function Navbar({
                       key={index}
                       href={link.href}
                       className="text-muted-foreground hover:text-foreground"
+                      {...externalLinkProps(link.href)}
                     >
                       {link.text}
                     </a>

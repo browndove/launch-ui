@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bento grid feature section</title>
+    <style>
+      /* ───────── base ───────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f1f0ee;
+        color: #0f0f0f;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter,
+          "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        padding: 48px 24px;
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+
+      /*
+       * Spec asks for grid-template-columns: 5fr 7fr with the wide column
+       * alternating sides per row. Two fixed tracks can't switch widths
+       * between rows, so we use a 12-col grid (5 + 7 = 12) and span cards
+       * to achieve the same visual layout.
+       */
+      .bento {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 12px;
+      }
+
+      .span-5 {
+        grid-column: span 5;
+      }
+      .span-7 {
+        grid-column: span 7;
+      }
+
+      /* ───────── card ───────── */
+      .card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 28px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 320px;
+        position: relative;
+      }
+      .card h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #0f0f0f;
+        margin: 0 0 8px;
+        letter-spacing: -0.01em;
+      }
+      .card p {
+        font-size: 14px;
+        color: #888;
+        line-height: 1.6;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .visual {
+        margin-top: auto;
+        padding-top: 24px;
+        position: relative;
+      }
+
+      /* ───────── card 1 — phone mockup ───────── */
+      .phone {
+        width: 200px;
+        margin: 0 auto -60px;
+        border: 1px solid #eee;
+        border-radius: 28px;
+        background: #fff;
+        padding: 10px 10px 0;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+      }
+      .phone-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: #0f0f0f;
+        padding: 4px 6px 8px;
+      }
+      .phone-status .icons {
+        display: inline-flex;
+        gap: 4px;
+        color: #0f0f0f;
+      }
+      .phone-status svg {
+        width: 12px;
+        height: 12px;
+      }
+      .phone-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px 12px;
+        border-top: 1px solid #f3f3f3;
+      }
+      .phone-nav .label {
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .phone-card {
+        background: #fafafa;
+        border: 1px solid #f1f1f1;
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin: 0 4px;
+      }
+      .phone-card .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .phone-card .label {
+        font-size: 10px;
+        color: #888;
+      }
+      .phone-card .value {
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 2px;
+        color: #0f0f0f;
+      }
+      .badge-orange {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        background: #faeada;
+        color: #c96a2e;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 999px;
+      }
+
+      /* ───────── card 2 — nodes diagram ───────── */
+      .arrow-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #e0d8d0;
+        background: transparent;
+        color: #888;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        line-height: 1;
+      }
+      .nodes {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 30px 8px 12px;
+        position: relative;
+      }
+      .nodes::before {
+        /* connector line */
+        content: "";
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 50%;
+        height: 1px;
+        background: #e6dfd7;
+        z-index: 0;
+      }
+      .node {
+        position: relative;
+        z-index: 1;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid #e0d8d0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #b8ad9e;
+      }
+      .node::before,
+      .node::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid #ece5dc;
+      }
+      .node::before {
+        inset: -10px;
+      }
+      .node::after {
+        inset: -22px;
+      }
+      .node.center {
+        background: #faeada;
+        border-color: #f1d8be;
+        color: #c96a2e;
+        width: 72px;
+        height: 72px;
+      }
+      .node.center::before {
+        border-color: #f1d8be;
+      }
+      .node.center::after {
+        border-color: #f4e2cf;
+      }
+      .node svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      /* ───────── card 3 — code editor ───────── */
+      .editor {
+        background: #1a1a1a;
+        border-radius: 10px;
+        padding: 14px 16px 18px;
+        margin: 0 -8px -56px;
+        font-family: "SF Mono", Menlo, Consolas, monospace;
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+      .editor .lights {
+        display: flex;
+        gap: 6px;
+        padding-bottom: 12px;
+      }
+      .editor .lights span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .editor .lights .r {
+        background: #ff5f57;
+      }
+      .editor .lights .y {
+        background: #febc2e;
+      }
+      .editor .lights .g {
+        background: #28c840;
+      }
+      .editor pre {
+        margin: 0;
+        color: #d6d6d6;
+        white-space: pre;
+        overflow: hidden;
+      }
+      .tk-key {
+        color: #c96a2e;
+      }
+      .tk-str {
+        color: #6cb6a3;
+      }
+      .tk-com {
+        color: #6e6e6e;
+        font-style: italic;
+      }
+      .tk-fn {
+        color: #e3b341;
+      }
+      .tk-pun {
+        color: #9a9a9a;
+      }
+
+      /* ───────── card 4 — performance score ───────── */
+      .perf {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .perf .label {
+        font-size: 13px;
+        color: #888;
+        font-weight: 500;
+      }
+      .perf .score {
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: #0f0f0f;
+      }
+      .perf .score sup {
+        font-size: 18px;
+        font-weight: 600;
+        color: #888;
+        margin-left: 4px;
+        vertical-align: super;
+      }
+      .bar {
+        height: 12px;
+        background: #f1ece6;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .bar > span {
+        display: block;
+        height: 100%;
+        width: 95%;
+        background: #c96a2e;
+        border-radius: 999px;
+      }
+
+      /* ───────── card 5 — bar chart ───────── */
+      .chart {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        height: 140px;
+        padding: 0 4px;
+      }
+      .chart .col {
+        flex: 1;
+        background: #e0d8d0;
+        border-radius: 6px 6px 0 0;
+      }
+      .chart .col.hi {
+        background: #c96a2e;
+      }
+
+      /* ───────── card 6 — components ───────── */
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 24px;
+        padding: 30px 8px 8px;
+      }
+      .ctrl {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        color: #888;
+        font-weight: 500;
+      }
+
+      /* toggle */
+      .toggle {
+        width: 48px;
+        height: 28px;
+        background: #c96a2e;
+        border-radius: 999px;
+        position: relative;
+      }
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        width: 22px;
+        height: 22px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+
+      /* checkbox */
+      .checkbox {
+        width: 26px;
+        height: 26px;
+        background: #c96a2e;
+        border-radius: 6px;
+        position: relative;
+      }
+      .checkbox::after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 3px;
+        width: 8px;
+        height: 14px;
+        border: solid #fff;
+        border-width: 0 2.5px 2.5px 0;
+        transform: rotate(45deg);
+      }
+
+      /* radio */
+      .radio {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 2px solid #c96a2e;
+        background: #fff;
+        position: relative;
+      }
+      .radio::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: #c96a2e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="bento">
+        <!-- Row 1: narrow | wide -->
+
+        <!-- Card 1 — Design-first (narrow) -->
+        <article class="card span-5">
+          <h3>Design-first</h3>
+          <p>
+            Each block and component is carefully crafted—not generated by
+            AI—to give a unique look and feel AI would never come up with.
+          </p>
+
+          <div class="visual">
+            <div class="phone">
+              <div class="phone-status">
+                <span>9:41</span>
+                <span class="icons">
+                  <!-- signal -->
+                  <svg viewBox="0 0 16 16" fill="currentColor">
+                    <rect x="1" y="11" width="2" height="3" rx="0.5" />
+                    <rect x="5" y="8" width="2" height="6" rx="0.5" />
+                    <rect x="9" y="5" width="2" height="9" rx="0.5" />
+                    <rect x="13" y="2" width="2" height="12" rx="0.5" />
+                  </svg>
+                  <!-- wifi -->
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M2 6c3.5-3 8.5-3 12 0" />
+                    <path d="M4.5 8.5c2-1.7 5-1.7 7 0" />
+                    <path d="M7 11.2c.6-.4 1.4-.4 2 0" />
+                  </svg>
+                  <!-- battery -->
+                  <svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1">
+                    <rect x="0.5" y="0.5" width="18" height="11" rx="2.5" />
+                    <rect x="2.5" y="2.5" width="13" height="7" rx="1" fill="currentColor" />
+                    <rect x="20" y="4" width="1.5" height="4" rx="0.6" fill="currentColor" />
+                  </svg>
+                </span>
+              </div>
+
+              <div class="phone-nav">
+                <!-- grid icon -->
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0f0f0f" stroke-width="1.4">
+                  <rect x="2" y="2" width="5" height="5" rx="1" />
+                  <rect x="9" y="2" width="5" height="5" rx="1" />
+                  <rect x="2" y="9" width="5" height="5" rx="1" />
+                  <rect x="9" y="9" width="5" height="5" rx="1" />
+                </svg>
+                <span class="label">Documents</span>
+              </div>
+
+              <div class="phone-card">
+                <div class="row">
+                  <span class="label">Total Revenue</span>
+                  <span class="badge-orange">↗ +12.5%</span>
+                </div>
+                <div class="value">$1,250.00</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 — Made for fast development (wide) -->
+        <article class="card span-7">
+          <button class="arrow-btn" aria-label="Open">↗</button>
+          <h3>Made for fast development</h3>
+          <p>
+            With lightweight code, modern tooling and best practices, it is as
+            fast in the browser as it is to build with.
+          </p>
+
+          <div class="visual">
+            <div class="nodes">
+              <div class="node">
+                <!-- cube -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+                  <path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z" />
+                  <path d="M4 7l8 4 8-4M12 11v10" />
+                </svg>
+              </div>
+              <div class="node center">
+                <!-- bolt -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
+                </svg>
+              </div>
+              <div class="node">
+                <!-- globe -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Row 2: wide | narrow -->
+
+        <!-- Card 3 — The code is yours (wide) -->
+        <article class="card span-7">
+          <h3>The code is yours</h3>
+          <p>
+            With Launch UI, the code is yours forever. Never bother about
+            subscriptions and lock-ins.
+          </p>
+
+          <div class="visual">
+            <div class="editor" aria-hidden="true">
+              <div class="lights">
+                <span class="r"></span><span class="y"></span><span class="g"></span>
+              </div>
+<pre><span class="tk-com">// page.tsx</span>
+<span class="tk-key">import</span> <span class="tk-pun">{</span> cn <span class="tk-pun">}</span> <span class="tk-key">from</span> <span class="tk-str">"@/lib/utils"</span><span class="tk-pun">;</span>
+<span class="tk-key">import</span> <span class="tk-pun">{</span> Card <span class="tk-pun">}</span> <span class="tk-key">from</span> <span class="tk-str">"@/components/ui/card"</span><span class="tk-pun">;</span>
+
+<span class="tk-key">export default function</span> <span class="tk-fn">Page</span><span class="tk-pun">()</span> <span class="tk-pun">{</span>
+  <span class="tk-key">return</span> <span class="tk-pun">&lt;</span><span class="tk-fn">Card</span><span class="tk-pun">&gt;</span>Hello<span class="tk-pun">&lt;/</span><span class="tk-fn">Card</span><span class="tk-pun">&gt;;</span>
+<span class="tk-pun">}</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 — Top-level performance (narrow) -->
+        <article class="card span-5">
+          <h3>Top-level performance</h3>
+          <p>
+            Made for static sites while avoiding heavy assets, your website
+            will feel snappy and load instantly.
+          </p>
+
+          <div class="visual perf">
+            <span class="label">Performance</span>
+            <span class="score">98<sup>/100</sup></span>
+            <div class="bar"><span></span></div>
+          </div>
+        </article>
+
+        <!-- Row 3: narrow | wide -->
+
+        <!-- Card 5 — Built for scale (narrow) -->
+        <article class="card span-5">
+          <h3>Built for scale</h3>
+          <p>
+            From personal projects to enterprise, Launch UI grows with your
+            needs without changing your workflow.
+          </p>
+
+          <div class="visual">
+            <div class="chart" aria-hidden="true">
+              <div class="col" style="height: 35%"></div>
+              <div class="col" style="height: 55%"></div>
+              <div class="col" style="height: 45%"></div>
+              <div class="col hi" style="height: 95%"></div>
+              <div class="col" style="height: 70%"></div>
+              <div class="col" style="height: 50%"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 — Fully accessible (wide) -->
+        <article class="card span-7">
+          <h3>Fully accessible</h3>
+          <p>
+            Every component ships with proper ARIA roles, keyboard navigation,
+            and screen reader support out of the box.
+          </p>
+
+          <div class="visual">
+            <div class="controls">
+              <div class="ctrl">
+                <div class="toggle" aria-hidden="true"></div>
+                <span>Toggle</span>
+              </div>
+              <div class="ctrl">
+                <div class="checkbox" aria-hidden="true"></div>
+                <span>Checkbox</span>
+              </div>
+              <div class="ctrl">
+                <div class="radio" aria-hidden="true"></div>
+                <span>Radio</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

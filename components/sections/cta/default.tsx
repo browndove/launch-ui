@@ -23,7 +23,7 @@ interface CTAProps {
 }
 
 export default function CTA({
-  title = "Start building",
+  title = "Ready when every second counts",
   buttons = [
     {
       href: siteConfig.getStartedUrl,
